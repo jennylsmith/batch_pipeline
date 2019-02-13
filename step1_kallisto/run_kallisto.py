@@ -114,8 +114,10 @@ def main(): # pylint: disable=too-many-locals, too-many-branches, too-many-state
         # run kallisto, put output in file
         # kallisto = sh.kallisto.bake(_iter=True, _err_to_out=True, _long_sep=" ")
         LOGGER.info("Running kallisto...")
+
+        #Updated by J.Smith on 2/13/19 for additional arguments to kallisto
         sh.kallisto('quant', "-i", "/tmp/{}".format(index), "-o", sample, "-b",
-                    30, "--fusion", "--rf-stranded", r1, r2,
+                    30, "--fusion","--pseudobam","--bias" "--rf-stranded", r1, r2,
                     _err_to_out=True, _out="{}/kallisto.out".format(sample))
         LOGGER.info("kallisto output:")
         for line in sh.cat("{}/kallisto.out".format(sample), _iter=True):
@@ -126,7 +128,7 @@ def main(): # pylint: disable=too-many-locals, too-many-branches, too-many-state
                            sample, "s3://{}/SR/kallisto_out/{}_{}/".format(bucket,
                                                                            sample,
                                                                            reference)))
-            # print(line)
+
         LOGGER.info("Completed without errors.")
     # handle errors
     except Exception: # pylint: disable=broad-except
