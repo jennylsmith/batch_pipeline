@@ -118,7 +118,7 @@ class BatchJobRunner(sciluigi.Task):
 
 class StepOneJobRunner(BatchJobRunner):
     "runner for first step in pipeline"
-    job_def_name = "pipeline-step1-picard"
+    job_def_name = "pipeline2-step1-kallisto"
     # FIXME task should automatically copy script to S3 before running
     def out_jobid(self):
         "return job id"
