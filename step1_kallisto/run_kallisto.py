@@ -23,8 +23,9 @@ def get_samples(): # FIXME put in common code file
     bytebuf = io.BytesIO()
     s3client = boto3.client("s3")
     url = urlparse(os.getenv("LIST_OF_SAMPLES"))
-    bucket = url.netloc #empty string??
+    #bucket = url.netloc #empty string??
     #bucket = os.getenv("BUCKET_NAME")
+    bucket="fh-pi-meshinchi-s"
     path = url.path.lstrip("/")
     s3client.download_fileobj(bucket, path, bytebuf)
     raw_sample = bytebuf.getvalue().decode("utf-8")
@@ -86,7 +87,7 @@ def main(): # pylint: disable=too-many-locals, too-many-branches, too-many-state
         else:
             sample = os.getenv("SAMPLE_NAME").strip()
         LOGGER.info("Sample is %s.", sample)
-        reference = os.getenv("REFERENCE")
+        reference = os.getenv("REFERENCE") #added to harness to export this env variable JS
         LOGGER.info("Reference is %s.", reference)
         index = "Homo_sapiens.{}.idx".format(reference)
         LOGGER.info("Index is %s.", index)
@@ -118,7 +119,7 @@ def main(): # pylint: disable=too-many-locals, too-many-branches, too-many-state
 
         #Updated by J.Smith on 2/13/19 for additional arguments to kallisto
         sh.kallisto('quant', "-i", "/tmp/{}".format(index), "-o", sample, "-b",
-                    30, "--fusion","--pseudobam","--bias" "--rf-stranded", r1, r2,
+                    30, "--fusion","--pseudobam","--bias", "--rf-stranded", r1, r2,
                     _err_to_out=True, _out="{}/kallisto.out".format(sample))
         LOGGER.info("kallisto output:")
         for line in sh.cat("{}/kallisto.out".format(sample), _iter=True):

@@ -13,8 +13,9 @@ export AWS_BATCH_JOB_ATTEMPT=1
 export BUCKET_NAME=fh-pi-meshinchi-s
 # export SAMPLE_NAME=PAWZNG-03A-01R_withJunctionsOnGenome_dupsFlagged
 # export SAMPLE_NAME=PAXFIG-03A-01R_withJunctionsOnGenome_dupsFlagged
-export LIST_OF_SAMPLES=dummy,PAXFIG-03A-01R_withJunctionsOnGenome_dupsFlagged
+#export LIST_OF_SAMPLES=BM3897-09A-01R_withJunctionsOnGenome_dupsFlagged,PAXFIG-03A-01R_withJunctionsOnGenome_dupsFlagged
+export LIST_OF_SAMPLES=s3://fh-pi-meshinchi-s/SR/Batch_Pipeline_Submission/fq.test1.txt
 export AWS_BATCH_JOB_ARRAY_INDEX=1
 export AWS_PROFILE=default
-
+export REFERENCE=GRCh37.87
 python3 run_kallisto.py

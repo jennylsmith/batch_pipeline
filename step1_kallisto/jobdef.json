@@ -1,5 +1,5 @@
 {
-    "jobDefinitionName": "pipeline-step2-kallisto",
+    "jobDefinitionName": "pipeline2-step1-kallisto",
     "type": "container",
     "containerProperties": {
         "volumes": [
@@ -28,7 +28,7 @@
             "value": "fh-pi-meshinchi-s"
           }
         ],
-        "image": "fredhutch/pipeline_kallisto",
+        "image": "jennylsmith/kallistov45.0",
         "vcpus": 1,
         "memory": 7000
     }

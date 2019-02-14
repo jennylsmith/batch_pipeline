@@ -51,24 +51,24 @@ class WF(sciluigi.WorkflowTask):
                               sample_list_file=self.sample_list_file,
                               reference=self.reference)
 
-        step2 = self.new_task('step2', StepTwoJobRunner, queue=self.queue,
-                              bucket_name=self.bucket_name,
-                              pipeline_name=self.pipeline_name,
-                              sample_list_file=self.sample_list_file,
-                              reference=self.reference)
+        # step2 = self.new_task('step2', StepTwoJobRunner, queue=self.queue,
+        #                       bucket_name=self.bucket_name,
+        #                       pipeline_name=self.pipeline_name,
+        #                       sample_list_file=self.sample_list_file,
+        #                       reference=self.reference)
+        #
+        #
+        # step2.in_step1 = step1.out_jobid
+        #
+        #
+        # step3 = self.new_task('step3', StepThreeJobRunner, queue=self.queue,
+        #                       bucket_name=self.bucket_name,
+        #                       pipeline_name=self.pipeline_name,
+        #                       sample_list_file=self.sample_list_file,
+        #                       reference=self.reference)
 
-
-        step2.in_step1 = step1.out_jobid
-
-
-        step3 = self.new_task('step3', StepThreeJobRunner, queue=self.queue,
-                              bucket_name=self.bucket_name,
-                              pipeline_name=self.pipeline_name,
-                              sample_list_file=self.sample_list_file,
-                              reference=self.reference)
-
-        step3.in_step2 = step2.out_jobid
-        return step3
+        # step3.in_step2 = step2.out_jobid
+        return step1
 
 class BatchJobRunner(sciluigi.Task):
     "common runner class"
