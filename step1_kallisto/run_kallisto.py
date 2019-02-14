@@ -23,7 +23,8 @@ def get_samples(): # FIXME put in common code file
     bytebuf = io.BytesIO()
     s3client = boto3.client("s3")
     url = urlparse(os.getenv("LIST_OF_SAMPLES"))
-    bucket = url.netloc
+    bucket = url.netloc #empty string??
+    #bucket = os.getenv("BUCKET_NAME")
     path = url.path.lstrip("/")
     s3client.download_fileobj(bucket, path, bytebuf)
     raw_sample = bytebuf.getvalue().decode("utf-8")

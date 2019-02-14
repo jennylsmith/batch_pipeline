@@ -15,6 +15,6 @@ export BUCKET_NAME=fh-pi-meshinchi-s
 # export SAMPLE_NAME=PAXFIG-03A-01R_withJunctionsOnGenome_dupsFlagged
 export LIST_OF_SAMPLES=dummy,PAXFIG-03A-01R_withJunctionsOnGenome_dupsFlagged
 export AWS_BATCH_JOB_ARRAY_INDEX=1
-export AWS_PROFILE=hse
+export AWS_PROFILE=default
 
 python3 run_kallisto.py
