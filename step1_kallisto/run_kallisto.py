@@ -11,6 +11,7 @@ import shutil
 import sys
 import time
 import traceback
+import glob
 from urllib.parse import urlparse
 
 
@@ -89,8 +90,7 @@ def main(): # pylint: disable=too-many-locals, too-many-branches, too-many-state
         LOGGER.info("Sample is %s.", sample)
         reference = os.getenv("REFERENCE") #added to harness to export this env variable JS
         LOGGER.info("Reference is %s.", reference)
-        index = "Homo_sapiens.{}.idx".format(reference)
-        LOGGER.info("Index is %s.", index)
+
         fastqs = []
         #aws = sh.aws.bake(_iter=True, _err_to_out=True, _out_bufsize=3000)
         # get fastq files
@@ -104,11 +104,17 @@ def main(): # pylint: disable=too-many-locals, too-many-branches, too-many-state
                 time.sleep(5)
         r1 = fastqs[0] # pylint: disable=invalid-name
         r2 = fastqs[1] # pylint: disable=invalid-name
+
         # get index file
         LOGGER.info("Downloading index file...")
-        sh.aws("s3", "cp", "s3://{}/SR/{}/{}".format(bucket, \
-          reference, index), "/tmp/")
+        # sh.aws("s3", "cp", "s3://{}/SR/{}/{}".format(bucket, \
+        #   reference, index), "/tmp/")
+        sh.aws("s3", "cp","--recursive", "--exclude", "*", "--include",  "*.idx", \
+            "s3://{}/SR/{}/".format(bucket, reference), "/tmp/")
+        index = glob.glob("/tmp/*.idx")[0]
+        LOGGER.info("Index is %s.", index)
         time.sleep(5)
+
         # create output dir
         os.makedirs(sample, exist_ok=True)
         LOGGER.info("downloaded files, listing directory...")
@@ -118,7 +124,8 @@ def main(): # pylint: disable=too-many-locals, too-many-branches, too-many-state
         LOGGER.info("Running kallisto...")
 
         #Updated by J.Smith on 2/13/19 for additional arguments to kallisto
-        sh.kallisto('quant', "-i", "/tmp/{}".format(index), "-o", sample, "-b",
+        #"/tmp/{}".format(index)
+        sh.kallisto('quant', "-i", index , "-o", sample, "-b",
                     30, "--fusion","--pseudobam","--bias", "--rf-stranded", r1, r2,
                     _err_to_out=True, _out="{}/kallisto.out".format(sample))
         LOGGER.info("kallisto output:")
@@ -130,7 +137,6 @@ def main(): # pylint: disable=too-many-locals, too-many-branches, too-many-state
                            sample, "s3://{}/SR/kallisto_out/{}_{}/".format(bucket,
                                                                            sample,
                                                                            reference)))
-
         LOGGER.info("Completed without errors.")
     # handle errors
     except Exception: # pylint: disable=broad-except
