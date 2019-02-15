@@ -1,0 +1,5 @@
+{
+    "jobDefinitionArn": "arn:aws:batch:us-west-2:064561331775:job-definition/pipeline2-step1-kallisto:1", 
+    "jobDefinitionName": "pipeline2-step1-kallisto", 
+    "revision": 1
+}
