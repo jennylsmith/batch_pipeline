@@ -31,7 +31,6 @@ print("Ignore this warning:", file=sys.stderr)
 import sciluigi # pylint: disable=wrong-import-position
 
 
-
 class WF(sciluigi.WorkflowTask):
     "workflow class"
     queue = sciluigi.Parameter()
@@ -124,14 +123,14 @@ class StepOneJobRunner(BatchJobRunner):
         "return job id"
         return sciluigi.TargetInfo(self, "step1.out")
     def run(self):
-        self.script_url = "s3://{}/SR/dtenenba-scripts/run_picard.py".format(self.bucket_name)
+        self.script_url = "s3://{}/SR/jlsmith3-scripts/run_kallisto.py".format(self.bucket_name)
         super(StepOneJobRunner, self).run()
-        self.submit_args['jobName'] = self.pipeline_name + "-picard-step-" + USER
+        self.submit_args['jobName'] = self.pipeline_name + "-kallisto-step-" + USER
         response = BATCH.submit_job(**self.submit_args)
         self.job_id = response['jobId']
         with self.out_jobid().open('w') as filehandle:
             filehandle.write(self.job_id)
-        LOG.info("Job ID for picard parent job is %s.", self.job_id)
+        LOG.info("Job ID for kallisto quant is %s.", self.job_id)
 
 
 class StepTwoJobRunner(BatchJobRunner):
@@ -193,7 +192,7 @@ def main():
     "handle args and run workflow"
     # remove old files
     print("Removing step files from previous runs...")
-    for i in range(1, 4):
+    for i in range(1, 2):
         stepfile = "step{}.out".format(i)
         if os.path.exists(stepfile):
             os.remove(stepfile)
