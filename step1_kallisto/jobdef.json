@@ -30,6 +30,6 @@
         ],
         "image": "jennylsmith/kallistov45.0",
         "vcpus": 1,
-        "memory": 7000
+        "memory": 10000
     }
 }

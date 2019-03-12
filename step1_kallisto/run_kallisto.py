@@ -107,8 +107,6 @@ def main(): # pylint: disable=too-many-locals, too-many-branches, too-many-state
 
         # get index file
         LOGGER.info("Downloading index file...")
-        # sh.aws("s3", "cp", "s3://{}/SR/{}/{}".format(bucket, \
-        #   reference, index), "/tmp/")
         sh.aws("s3", "cp","--recursive", "--exclude", "*", "--include",  "*.idx", \
             "s3://{}/SR/{}/".format(bucket, reference), "/tmp/")
         index = glob.glob("/tmp/*.idx")[0]
@@ -124,7 +122,6 @@ def main(): # pylint: disable=too-many-locals, too-many-branches, too-many-state
         LOGGER.info("Running kallisto...")
 
         #Updated by J.Smith on 2/13/19 for additional arguments to kallisto
-        #"/tmp/{}".format(index)
         sh.kallisto('quant', "-i", index , "-o", sample, "-b",
                     30, "--fusion","--pseudobam","--bias", "--rf-stranded", r1, r2,
                     _err_to_out=True, _out="{}/kallisto.out".format(sample))
