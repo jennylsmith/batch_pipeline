@@ -1,32 +1,13 @@
-# AWS Batch Example Array Job Pipeline
+# AWS Batch Example Array Job Pipeline - Only Run Kallisto
+
 
 ## Overview
 
-
-Many scientific tasks are sequential, multi-step processes.
-The steps are dependent upon each other; that is, step 2 cannot
-proceed without the output from step 1.
-
-This example implements one such process, consisting of three tasks.
-
 ### Task 1:
-
-* Download a BAM file from S3
-* Run [Picard](https://broadinstitute.github.io/picard/) on it,
-  producing two `fastq` files.
-* Upload  `fastq` files to S3.
-
-### Task 2:
 
 * Download the `fastq` files (produced in Task 1) from S3
 * Run [kallisto](https://pachterlab.github.io/kallisto/) on them.
 * Upload the output (a `fusion.txt` file) to S3.
-
-### Task 3:
-
-* Download the `fusion.txt` file (produced in Task 2) from S3.
-* Run [pizzly](https://github.com/pmelsted/pizzly) on it.
-* Upload the output (??) to S3.
 
 
 Using AWS Batch [Array Jobs](https://docs.aws.amazon.com/batch/latest/userguide/array_jobs.html),
@@ -69,14 +50,7 @@ run.
 
 ### Job Submission
 
-This pipeline consists of three array jobs.
-The first job, running the `picard` step, has no dependencies.
-The second job, running the `kallisto` step, depends on the first job.
-The third job, running the `pizzly` step, depends on the second job.
-
-So the first job must be started so that we can get its job ID, and we then
-use that ID in the second job to declare a dependency on the first one,
-and likewise for the third.
+This pipeline consists of one array job, running the `kallisto` step. 
 
 We pass a list of samples to the jobs, by providing a text
 file containing one sample name per line.
@@ -170,29 +144,3 @@ Once a pipeline has completed, you can use the `utils.py` script to find out
 Run `utils.py` without arguments to get further help.
 
 
-### Possible enhancements
-
-
-* Factor out common code in the 'batch-side' scripts. This would require
-  putting the common code in a library, and passing the `fetch & run` script
-  a zip file (containing all the code) instead of a single script. This
-  requires some development and test time.
-* Create a common Dockerfile to be the parent of all the Dockerfiles used
-  in this example.
-* Enhance the example so that all the preliminary work, which is
-  currently done manually, can be done automatically
-  from within the `sciluigi` workflow.
-  These preliminary steps include:
-  * Building and pushing the Docker images.
-  * Creating the job definitions for each job.
-  * Copying the batch-side scripts to S3 before starting a job.
-  * Putting the reference files in S3 in the expected location
-    (i.e. files for  `GRCh38.91` should go under `s3://<bucket-name>/SR/GRCh38.91/`).
-
-See the [issues](https://github.com/FredHutch/batch_pipeline/issues) page
-for more detail.
-
-### Questions, comments, fixes?
-
-File an [issue](https://github.com/FredHutch/batch_pipeline/issues/new)
-or send a [pull request](https://github.com/FredHutch/batch_pipeline/pulls).
