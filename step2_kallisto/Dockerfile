@@ -13,13 +13,13 @@ RUN pip3 install boto3 sh
 
 RUN rm get-pip.py
 
-RUN curl -LO https://github.com/pachterlab/kallisto/releases/download/v0.43.1/kallisto_linux-v0.43.1.tar.gz
+RUN curl -LO  https://github.com/pachterlab/kallisto/releases/download/v0.45.0/kallisto_linux-v0.45.0.tar.gz
 
-RUN tar zxf kallisto_linux-v0.43.1.tar.gz
+RUN tar -zxf kallisto_linux-v0.45.0.tar.gz
 
-RUN cp kallisto_linux-v0.43.1/kallisto /usr/local/bin/
+RUN cp kallisto_linux-v0.45.0/kallisto /usr/local/bin/
 
-RUN rm -rf kallisto_linux-v0.43.1.tar.gz  kallisto_linux-v0.43.1
+RUN rm -rf kallisto_linux-v0.45.0.tar.gz  kallisto_linux-v0.45.0
 
 RUN curl -LO https://github.com/awslabs/aws-batch-helpers/archive/master.zip
 
