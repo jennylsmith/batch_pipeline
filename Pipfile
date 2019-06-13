@@ -8,7 +8,7 @@ sciluigi = "*"
 "boto3" = "*"
 sh = "*"
 pymongo = "*"
-luigi = "*"
+luigi = "==2.8.0"
 
 [dev-packages]
 pylint = "*"
