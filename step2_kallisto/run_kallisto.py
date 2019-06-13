@@ -26,7 +26,7 @@ def get_samples(): # FIXME put in common code file
     url = urlparse(os.getenv("LIST_OF_SAMPLES"))
     bucket="fh-pi-meshinchi-s"
     #bucket = url.netloc
-    #path = url.path.lstrip("/")
+    path = url.path.lstrip("/")
     s3client.download_fileobj(bucket, path, bytebuf)
     raw_sample = bytebuf.getvalue().decode("utf-8")
     samples = raw_sample.splitlines()
