@@ -153,7 +153,7 @@ python3 main.py --queue=mixed --bucket-name=<YOUR_BUCKET_NAME> --reference=GRCh3
 ```
 
 Where `s3://mybucket/mysamplelist.txt` is
-an S3 URL pointing to the file containing the list of samples you want to process.
+an S3 URL pointing to the file containing the list of samples you want to process. The `--sample-list-file` can contain AWS S3 prefixes prepended to the actual sample file names (eg myExperimentFiles/sample_name.bam) for each line in the sample list file. 
 
 This will print out some information including the job IDs of each job step.
 Keep these to refer to later (see next section).
