@@ -124,7 +124,7 @@ class StepOneJobRunner(BatchJobRunner):
         "return job id"
         return sciluigi.TargetInfo(self, "step1.out")
     def run(self):
-        self.script_url = "s3://{}/SR/dtenenba-scripts/run_picard.py".format(self.bucket_name)
+        self.script_url = "s3://{}/SR/jlsmith3-scripts/1_run_picard.py".format(self.bucket_name)
         super(StepOneJobRunner, self).run()
         self.submit_args['jobName'] = self.pipeline_name + "-picard-step-" + USER
         response = BATCH.submit_job(**self.submit_args)
@@ -142,7 +142,7 @@ class StepTwoJobRunner(BatchJobRunner):
         "return job id"
         return sciluigi.TargetInfo(self, "step2.out")
     def run(self):
-        self.script_url = "s3://{}/SR/dtenenba-scripts/run_kallisto.py".format(self.bucket_name)
+        self.script_url = "s3://{}/SR/jlsmith3-scripts/2_run_kallisto.py".format(self.bucket_name)
         super(StepTwoJobRunner, self).run()
         self.submit_args['jobName'] = self.pipeline_name + "-kallisto-step-" + USER
         with self.in_step1().open() as in_f: # pylint: disable=not-callable
@@ -163,7 +163,7 @@ class StepThreeJobRunner(BatchJobRunner):
         "return job id"
         return sciluigi.TargetInfo(self, "step3.out")
     def run(self):
-        self.script_url = "s3://{}/SR/dtenenba-scripts/run_pizzly.py".format(self.bucket_name)
+        self.script_url = "s3://{}/SR/jlsmith3-scripts/3_run_pizzly.py".format(self.bucket_name)
         super(StepThreeJobRunner, self).run()
         self.submit_args['jobName'] = self.pipeline_name + "-pizzly-step-" + USER
         with self.in_step2().open() as in_f: # pylint: disable=not-callable
@@ -174,9 +174,6 @@ class StepThreeJobRunner(BatchJobRunner):
         with self.out_jobid().open('w') as filehandle:
             filehandle.write(self.job_id)
         LOG.info("Job ID for pizzly parent job is %s.", self.job_id)
-
-
-
 
 
 def get_latest_jobdef_revision(jobdef_name): # FIXME handle pagination
@@ -193,7 +190,7 @@ def main():
     "handle args and run workflow"
     # remove old files
     print("Removing step files from previous runs...")
-    for i in range(1, 4):
+    for i in range(1, 3):
         stepfile = "step{}.out".format(i)
         if os.path.exists(stepfile):
             os.remove(stepfile)

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-a shell-script-like python script to run kallisto
+a shell-script-like python script to run picard
 in AWS batch
 """
 
@@ -9,9 +9,7 @@ import os
 import logging
 import shutil
 import sys
-import time
 import traceback
-import glob
 from urllib.parse import urlparse
 
 
@@ -24,8 +22,7 @@ def get_samples(): # FIXME put in common code file
     bytebuf = io.BytesIO()
     s3client = boto3.client("s3")
     url = urlparse(os.getenv("LIST_OF_SAMPLES"))
-    bucket="fh-pi-meshinchi-s"
-    #bucket = url.netloc
+    bucket = url.netloc
     path = url.path.lstrip("/")
     s3client.download_fileobj(bucket, path, bytebuf)
     raw_sample = bytebuf.getvalue().decode("utf-8")
@@ -87,54 +84,51 @@ def main(): # pylint: disable=too-many-locals, too-many-branches, too-many-state
         else:
             sample = os.getenv("SAMPLE_NAME").strip()
         LOGGER.info("Sample is %s.", sample)
-        reference = os.getenv("REFERENCE")
-        LOGGER.info("Reference is %s.", reference)
+        aws = sh.aws.bake(_iter=True, _err_to_out=True, _out_bufsize=3000)
+        java_dir = "/home/neo/.local/easybuild/software/Java/1.8.0_92/bin"
+        bam = "{}.bam".format(sample)
+        sample = sample.split("/")[-1] #if sample file list contains prefixes other than SR/, they need to be stripped off
 
+        # add java_dir to path
+        os.environ['PATH'] += ":" + java_dir
+        ebrootpicard = "/home/neo/.local/easybuild/software/picard/2.13.2-Java-1.8.0_92/"
+        LOGGER.info("Downloading bam file...")
+        if not os.path.exists(bam): # for testing TODO remove
+            for line in aws("s3", "cp",
+                            "s3://{}/SR/{}".format(bucket, bam), "."):
+                print(line)
 
-        fastqs = []
-        #aws = sh.aws.bake(_iter=True, _err_to_out=True, _out_bufsize=3000)
-        # get fastq files
-        LOGGER.info("Downloading fastq files...")
-        for i in range(1, 3):
-            fastq = "{}_r{}.fq.gz".format(sample, i)
-            fastqs.append(fastq)
-            if not os.path.exists(fastq): # for testing TODO remove
-                LOGGER.info(sh.aws("s3", "cp",
-                                   "s3://{}/SR/picard_fq2/{}".format(bucket, fastq), "."))
-                time.sleep(5)
-        r1 = fastqs[0] # pylint: disable=invalid-name
-        r2 = fastqs[1] # pylint: disable=invalid-name
+        # run picard, put output in file
+        java = sh.java.bake(_iter=True, _err_to_out=True, _long_sep=" ")
+        LOGGER.info("Running picard...")
+        logfile = "{}_picard.stderr".format(sample)
+        r1 = "{}_r1.fq.gz".format(sample) # pylint: disable=invalid-name
+        r2 = "{}_r2.fq.gz".format(sample) # pylint: disable=invalid-name
+        with open(logfile, "w") as plog:
+            for line in java("-Xmx12g", "-Xms2g", "-jar",
+                             "{}/picard.jar".format(ebrootpicard),
+                             "SamToFastq", "QUIET=true",
+                             "INCLUDE_NON_PF_READS=true",
+                             "VALIDATION_STRINGENCY=SILENT",
+                             "MAX_RECORDS_IN_RAM=250000", "I={}".format(bam),
+                             "F={}".format(r1), "F2={}".format(r2)):
+                LOGGER.info("picard: %s", line)
+                plog.write(line)
+                plog.flush()
+                sys.stdout.flush()
 
-        # get index file
-        LOGGER.info("Downloading index file...")
-         sh.aws("s3", "cp","--recursive", "--exclude", "*", "--include",  "*.idx", \
-            "s3://{}/SR/{}/".format(bucket, reference), "/tmp/")
-        index = glob.glob("/tmp/*.idx")[0]
-        LOGGER.info("Index is %s.", index)
-        time.sleep(5)
-
-        # create output dir
-        os.makedirs(sample, exist_ok=True)
-        LOGGER.info("downloaded files, listing directory...")
-        LOGGER.info(sh.ls("-l"))
-
-        # run kallisto, put output in file
-        # kallisto = sh.kallisto.bake(_iter=True, _err_to_out=True, _long_sep=" ")
-        LOGGER.info("Running kallisto...")
-        sh.kallisto('quant', "-i", "/tmp/{}".format(index), "-o", sample, "-b",
-                    30, "--fusion","--bias", "--rf-stranded", r1, r2,
-                    _err_to_out=True, _out="{}/kallisto.out".format(sample))
-        LOGGER.info("kallisto output:")
-        for line in sh.cat("{}/kallisto.out".format(sample), _iter=True):
-            LOGGER.info(line)
-        # copy kallisto output to S3
-        LOGGER.info("Copying all kallisto output to S3...")
-        LOGGER.info(sh.aws("s3", "cp", "--sse", "AES256", "--recursive", "--include", "*",
-                           sample, "s3://{}/SR/kallisto_out/{}_{}/".format(bucket,
-                                                                           sample,
-                                                                           reference)))
-            # print(line)
+        # copy picard output to S3
+        LOGGER.info("Copying picard output to S3...")
+        for item in [r1, r2]:
+            for line in aws("s3", "cp",
+                            item, "s3://{}/SR/picard_fq2/".format(bucket),
+                            sse="AES256"):
+                print(line)
+        for line in aws("s3", "cp", logfile,
+                        "s3://{}/SR/picard_fq2/".format(bucket), sse="AES256"):
+            print(line)
         LOGGER.info("Completed without errors.")
+
     # handle errors
     except Exception: # pylint: disable=broad-except
         exitcode = 1
