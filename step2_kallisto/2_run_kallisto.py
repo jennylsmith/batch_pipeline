@@ -99,7 +99,7 @@ def main(): # pylint: disable=too-many-locals, too-many-branches, too-many-state
             fastq = "{}_r{}.fq.gz".format(sample, i)
             fastqs.append(fastq)
             if not os.path.exists(fastq): # for testing TODO remove
-                LOGGER.info(sh.aws("s3", "cp",
+                LOGGER.info(sh.aws("s3", "cp","--only-show-errors",
                                    "s3://{}/SR/picard_fq2/{}".format(bucket, fastq), "."))
                 time.sleep(5)
         r1 = fastqs[0] # pylint: disable=invalid-name
@@ -129,7 +129,7 @@ def main(): # pylint: disable=too-many-locals, too-many-branches, too-many-state
             LOGGER.info(line)
         # copy kallisto output to S3
         LOGGER.info("Copying all kallisto output to S3...")
-        LOGGER.info(sh.aws("s3", "cp", "--sse", "AES256", "--recursive", "--include", "*",
+        LOGGER.info(sh.aws("s3", "cp", "--only-show-errors","--sse", "AES256", "--recursive", "--include", "*",
                            sample, "s3://{}/SR/kallisto_out/{}_{}/".format(bucket,
                                                                            sample,
                                                                            reference)))

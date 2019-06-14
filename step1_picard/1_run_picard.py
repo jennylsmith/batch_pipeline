@@ -94,7 +94,7 @@ def main(): # pylint: disable=too-many-locals, too-many-branches, too-many-state
         ebrootpicard = "/home/neo/.local/easybuild/software/picard/2.13.2-Java-1.8.0_92/"
         LOGGER.info("Downloading bam file...")
         if not os.path.exists(bam): # for testing TODO remove
-            for line in aws("s3", "cp",
+            for line in aws("s3", "cp","--only-show-errors",
                             "s3://{}/SR/{}".format(bucket, bam), "."):
                 print(line)
 
@@ -120,11 +120,11 @@ def main(): # pylint: disable=too-many-locals, too-many-branches, too-many-state
         # copy picard output to S3
         LOGGER.info("Copying picard output to S3...")
         for item in [r1, r2]:
-            for line in aws("s3", "cp",
+            for line in aws("s3", "cp","--only-show-errors",
                             item, "s3://{}/SR/picard_fq2/".format(bucket),
                             sse="AES256"):
                 print(line)
-        for line in aws("s3", "cp", logfile,
+        for line in aws("s3", "cp","--only-show-errors", logfile,
                         "s3://{}/SR/picard_fq2/".format(bucket), sse="AES256"):
             print(line)
         LOGGER.info("Completed without errors.")
