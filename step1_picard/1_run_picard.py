@@ -86,13 +86,13 @@ def main(): # pylint: disable=too-many-locals, too-many-branches, too-many-state
         LOGGER.info("Sample is %s.", sample)
         aws = sh.aws.bake(_iter=True, _err_to_out=True, _out_bufsize=3000)
         java_dir = "/home/neo/.local/easybuild/software/Java/1.8.0_92/bin"
-        bam = "{}.bam".format(sample)
-        sample = sample.split("/")[-1] #if sample file list contains prefixes other than SR/, they need to be stripped off
+
 
         # add java_dir to path
         os.environ['PATH'] += ":" + java_dir
         ebrootpicard = "/home/neo/.local/easybuild/software/picard/2.13.2-Java-1.8.0_92/"
         LOGGER.info("Downloading bam file...")
+        bam = "{}.bam".format(sample)
         if not os.path.exists(bam): # for testing TODO remove
             for line in aws("s3", "cp","--only-show-errors",
                             "s3://{}/SR/{}".format(bucket, bam), "."):
@@ -101,7 +101,9 @@ def main(): # pylint: disable=too-many-locals, too-many-branches, too-many-state
         # run picard, put output in file
         java = sh.java.bake(_iter=True, _err_to_out=True, _long_sep=" ")
         LOGGER.info("Running picard...")
+        sample = sample.split("/")[-1] #if sample file list contains prefixes other than SR/, they need to be stripped off
         logfile = "{}_picard.stderr".format(sample)
+        bam = bam.split("/")[-1] #filename WITHOUT the accessory prefix after the download completes
         r1 = "{}_r1.fq.gz".format(sample) # pylint: disable=invalid-name
         r2 = "{}_r2.fq.gz".format(sample) # pylint: disable=invalid-name
         with open(logfile, "w") as plog:
