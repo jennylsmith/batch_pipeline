@@ -107,7 +107,7 @@ def main(): # pylint: disable=too-many-locals, too-many-branches, too-many-state
 
         # get index file
         LOGGER.info("Downloading index file...")
-         sh.aws("s3", "cp","--recursive", "--exclude", "*", "--include",  "*.idx", \
+        sh.aws("s3", "cp","--recursive", "--exclude", "*", "--include",  "*.idx", \
             "s3://{}/SR/{}/".format(bucket, reference), "/tmp/")
         index = glob.glob("/tmp/*.idx")[0]
         LOGGER.info("Index is %s.", index)
