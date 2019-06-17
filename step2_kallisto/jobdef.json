@@ -30,6 +30,6 @@
         ],
         "image": "fredhutch/pipeline_kallisto",
         "vcpus": 1,
-        "memory": 7000
+        "memory": 15000
     }
 }
