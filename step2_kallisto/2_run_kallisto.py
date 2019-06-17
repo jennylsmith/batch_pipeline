@@ -121,7 +121,7 @@ def main(): # pylint: disable=too-many-locals, too-many-branches, too-many-state
         # run kallisto, put output in file
         # kallisto = sh.kallisto.bake(_iter=True, _err_to_out=True, _long_sep=" ")
         LOGGER.info("Running kallisto...")
-        sh.kallisto('quant', "-i", "/tmp/{}".format(index), "-o", sample, "-b",
+        sh.kallisto('quant', "-i", index, "-o", sample, "-b",
                     30, "--fusion","--bias", "--rf-stranded", r1, r2,
                     _err_to_out=True, _out="{}/kallisto.out".format(sample))
         LOGGER.info("kallisto output:")
