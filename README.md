@@ -126,6 +126,7 @@ Install dependencies (you only need to do this once):
 
 ```
 pipenv install
+pipenv install luigi==2.8.0 #for compatibilitypipenv install luigi==2.8.0 #for compatibility
 ```
 
 Activate your virtual environment:
