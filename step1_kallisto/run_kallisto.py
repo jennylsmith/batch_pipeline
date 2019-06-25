@@ -123,7 +123,7 @@ def main(): # pylint: disable=too-many-locals, too-many-branches, too-many-state
 
         #Updated by J.Smith on 2/13/19 for additional arguments to kallisto
         sh.kallisto('quant', "-i", index , "-o", sample, "-b",
-                    30, "--fusion","--pseudobam","--bias", "--rf-stranded", r1, r2,
+                    30, "--fusion","--bias", "--rf-stranded", r1, r2,
                     _err_to_out=True, _out="{}/kallisto.out".format(sample))
         LOGGER.info("kallisto output:")
         for line in sh.cat("{}/kallisto.out".format(sample), _iter=True):
