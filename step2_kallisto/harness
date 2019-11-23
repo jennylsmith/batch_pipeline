@@ -1,20 +1,14 @@
 #!/bin/bash
 
-# A test harness to run run_kallisto.py in Docker
-# run something like this:
+# An interactive test harness Docker container
+ docker run -ti --rm --name kallisto -v $(pwd):/work --entrypoint /bin/bash jennylsmith/kallistov45.0:nextflow
 
-# docker run  --rm --name kallisto -v ~/.aws:/root/.aws \
-#   -v $(pwd):/work -w /work --entrypoint /work/harness \
-#   fredhutch/pipeline_kallisto
+# kallisto quant -i $index -o $Sample -b 30 -t 4 \
+#   --fusion --bias --rf-stranded  $R1 $R2 2> ${R1.simpleName}.kallisto.out
 
-export AWS_BATCH_JOB_ID='some-job-id-with-a:colon'
-export AWS_BATCH_JOB_ATTEMPT=1
 
-export BUCKET_NAME=fh-pi-meshinchi-s
-# export SAMPLE_NAME=PAWZNG-03A-01R_withJunctionsOnGenome_dupsFlagged
-# export SAMPLE_NAME=PAXFIG-03A-01R_withJunctionsOnGenome_dupsFlagged
-export LIST_OF_SAMPLES=dummy,PAXFIG-03A-01R_withJunctionsOnGenome_dupsFlagged
-export AWS_BATCH_JOB_ARRAY_INDEX=1
-export AWS_PROFILE=hse
-
-python3 run_kallisto.py
+#How to make a sample sheet (so far...)
+aws s3 ls s3://fh-pi-meshinchi-s/SR/SWOG/ | tr -s ' ' | cut -f 4 -d " " > fastqs.txt
+cat fastqs.txt | awk '{OFS="\t";col1=$1; split(col1,a,"_"); SWOGID=a[2]; col2=$1; gsub("R1", "R2", col2); print SWOGID,$1,col2 }' > swog_sample_sheet.txt
+cat swog_sample_sheet.txt | awk 'BEGIN{OFS="\t";print "Sample","R1","R2"}{print $1,$2,$3}' > tmpfile && mv tmpfile swog_sample_sheet.txt
+sed -E  "s|  ([0-9])|        $BUCKET/\\1|g" swog_sample_sheet.txt

@@ -1,32 +1,11 @@
-# save image as fredhutch/pipeline_kallisto
+FROM ubuntu:16.04
 
-FROM fredhutch/fredhutch-ubuntu:16.04_20171030
+#Updating Ubuntu packages
+RUN apt-get update && yes|apt-get upgrade
+RUN apt-get install -y bzip2 curl unzip git gcc
 
-# aws, curl, git, and unzip are already installed
-# so are python and python3 but no pip*
-
-RUN curl -LO https://bootstrap.pypa.io/get-pip.py
-
-RUN python3 get-pip.py
-
-RUN pip3 install boto3 sh
-
-RUN rm get-pip.py
-
+#Install Kallisto
 RUN curl -LO  https://github.com/pachterlab/kallisto/releases/download/v0.45.0/kallisto_linux-v0.45.0.tar.gz
-
 RUN tar -zxf kallisto_linux-v0.45.0.tar.gz
-
 RUN cp kallisto_linux-v0.45.0/kallisto /usr/local/bin/
-
 RUN rm -rf kallisto_linux-v0.45.0.tar.gz  kallisto_linux-v0.45.0
-
-RUN curl -LO https://github.com/awslabs/aws-batch-helpers/archive/master.zip
-
-RUN unzip master.zip
-
-RUN cp aws-batch-helpers-master/fetch-and-run/fetch_and_run.sh /usr/local/bin/
-
-RUN rm -rf master.zip aws-batch-helpers-master
-
-ENTRYPOINT ["/usr/local/bin/fetch_and_run.sh"]
