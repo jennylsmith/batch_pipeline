@@ -3,8 +3,8 @@ set -e
 BASE_BUCKET="s3://fh-pi-meshinchi-s/SR"
 
 
-# Load the module
-#ml nextflow
+#Add nextflow to PATH
+export PATH=~/scripts/opt/bin:$PATH
 
 #Execute the Kallisto nextflow workflow
 nextflow run -c ~/nextflow.config kallisto.nf \
