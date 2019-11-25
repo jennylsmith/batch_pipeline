@@ -21,7 +21,7 @@ process kallisto_quant {
 	memory "30 GB"
 
 	// if process fails, retry running it
-	errorStrategy "terminate"
+	errorStrategy "retry"
 
 	// declare the input types and its variable names
 	input:

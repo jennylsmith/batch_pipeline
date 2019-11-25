@@ -6,9 +6,9 @@ BASE_BUCKET="s3://fh-pi-meshinchi-s/SR"
 # Load the module
 #ml nextflow
 
-#Execute the next flow workflow
+#Execute the Kallisto nextflow workflow
 nextflow run -c ~/nextflow.config kallisto.nf \
-    --sample_sheet sample_sheet.txt \
+    --sample_sheet swog_sample_sheet.txt \
     --index $BASE_BUCKET/GRCh38.v29/gencode.v29_RepBase.v24.01.idx \
     --output_folder  $BASE_BUCKET/SWOG/kallisto_out \
     -with-report nextflow_report.html \
