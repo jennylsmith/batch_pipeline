@@ -7,3 +7,4 @@ step*.out
 audit/
 sample_list.txt
 *.nextflow*
+SWOG/
