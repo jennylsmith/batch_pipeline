@@ -8,3 +8,4 @@ audit/
 sample_list.txt
 *.nextflow*
 SWOG/
+nextflow_report.html*
