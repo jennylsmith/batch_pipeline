@@ -1,0 +1,6 @@
+Sample	BAM
+ME1-50A-01R	TARGET-20-ME1-50A-01R_RBS_withJunctionsOnGenome_dupsFlagged.bam
+MPN022-03A-01R	TARGET-20-MPN022-03A-01R_RBS_withJunctionsOnGenome_dupsFlagged.bam
+PAVNUW-03A-01R	TARGET-20-PAVNUW-03A-01R_RBS_withJunctionsOnGenome_dupsFlagged.bam
+PAVNUW-04A-01R	TARGET-20-PAVNUW-04A-01R_RBS_withJunctionsOnGenome_dupsFlagged.bam
+R003609-34POS-14A-01R	TARGET-00-R003609-34POS-14A-01R_RBS_withJunctionsOnGenome_dupsFlagged.bam
