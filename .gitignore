@@ -10,3 +10,4 @@ tryit.sh
 step*.out
 audit/
 sample_list.txt
+.nextflow*
