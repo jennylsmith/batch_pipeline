@@ -11,7 +11,8 @@ export PATH=~/scripts/opt/bin:$PATH #there is now a module with Nextlfow version
 nextflow run -c ~/nextflow.config kallisto.nf \
     --sample_sheet ~/scripts/batch_pipeline/sample_sheets/relapse_sample_sheet.txt \
     --index $BASE_BUCKET/GRCh38.v29/gencode.v29_RepBase.v24.01.idx \
-    --output_folder  $BASE_BUCKET/kallisto_out/ \
+    --picard_out_dir $BASE_BUCKET/picard_fq2/
+    --kallisto_out_dir  $BASE_BUCKET/kallisto_out/ \
     -with-report nextflow_report.html \
     -work-dir $BASE_BUCKET/work \
     -cache  TRUE \

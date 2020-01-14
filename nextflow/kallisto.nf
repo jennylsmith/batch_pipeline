@@ -14,7 +14,7 @@ params.output_folder = "./kallisto/"
 //Run Picard BAM to fastq if necessary if necessary
 process picard_samtofq {
 
-	publishDir "s3://fh-pi-meshinchi-s/SR/picard_fq2"
+	publishDir "$params.picard_out_dir/"
 
 	// use picard repo on docker hub.
 	container "jennylsmith/picardtools:v2.13.2"
@@ -35,8 +35,6 @@ process picard_samtofq {
 	"""
 	set -eou pipefail
 	ls -alh
-	echo $Sample $BAM
-	echo \$JAVA_HOME
 
 	java -Xmx12g -Xms2g \
 		-jar /picard/picard.jar SamToFastq \
@@ -52,11 +50,10 @@ process picard_samtofq {
 }
 
 
-/*
 //Run Kallisto quant on all fastq pairs and save output with the sample ID
 process kallisto_quant {
 
-	publishDir "$params.output_folder/"
+	publishDir "$params.kallisto_out_dir/"
 
 	// use Kallisto repo on docker hub.
 	container "jennylsmith/kallistov45.0:nextflow"
@@ -84,4 +81,3 @@ process kallisto_quant {
 	   --fusion --bias --rf-stranded  $R1 $R2
 	"""
 }
-*/
