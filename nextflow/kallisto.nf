@@ -7,11 +7,13 @@ bams_ch = Channel.fromPath(file(params.sample_sheet))
 						.map { sample -> [sample["Sample"], file(sample["BAM"])]}
 index = file("${params.index}")
 
+
 // define the default output directory if not specified in the run script.
-params.output_folder = "./kallisto/"
+params.picard_out_dir = "./picard/"
+params.kallisto_out_dir = "./kallisto/"
 
 
-//Run Picard BAM to fastq if necessary if necessary
+//Run Picard BAM to fastq if necessary
 process picard_samtofq {
 
 	publishDir "$params.picard_out_dir/"
@@ -34,7 +36,6 @@ process picard_samtofq {
 
 	"""
 	set -eou pipefail
-	ls -alh
 
 	java -Xmx12g -Xms2g \
 		-jar /picard/picard.jar SamToFastq \
@@ -45,6 +46,7 @@ process picard_samtofq {
 	 	I="$BAM" F="${BAM.simpleName}_r1.fq.gz" F2="${BAM.simpleName}_r2.fq.gz"
 
 	export Sample="$Sample"
+	ls -alh
 
 	"""
 }
@@ -74,10 +76,12 @@ process kallisto_quant {
 
 	"""
 	set -eou pipefail
-	ls -alh
 	ls $index
 
 	kallisto quant -i $index -o $Sample -b 30 -t 4 \
 	   --fusion --bias --rf-stranded  $R1 $R2
+
+	ls -alh
+
 	"""
 }
