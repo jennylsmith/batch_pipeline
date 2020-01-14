@@ -30,7 +30,7 @@ process picard_samtofq {
 
 	//define output files to save to the output_folder by publishDir command
 	output:
-	tuple file("*r1.fq.gz"), file("*r2.fq.gz") into fqs_ch
+	tuple val(Sample), file("*r1.fq.gz"), file("*r2.fq.gz") into fqs_ch
 
 	"""
 	set -eou pipefail
