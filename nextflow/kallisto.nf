@@ -13,7 +13,7 @@ index = file("${params.index}")
 params.skip_picard = true
 (bams_ch, fqs_ch) = ( params.skip_picard
                  ? [ Channel.empty(), input_ch.map{sheet -> [sheet["Sample"], file(sheet["R1"]), file(sheet["R2"])]} ]
-								 : [ input_ch.map{sheet -> [sheet["Sample"], file(sheet["BAM"])]}, Channel.empty() ])
+		 : [ input_ch.map{sheet -> [sheet["Sample"], file(sheet["BAM"])]}, Channel.empty() ])
 
 
 // define the default output directory if not specified in the run script.
