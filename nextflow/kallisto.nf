@@ -1,11 +1,19 @@
 #!/usr/bin/env nextflow
 
 // Define the input paired fastq files in a sample sheet and genome references
-// sample_sheet is tab separated with column names "Sample", and "BAM"
-bams_ch = Channel.fromPath(file(params.sample_sheet))
+// for BAM channel: sample_sheet is tab separated with column names "Sample", and "BAM"
+// for FASTQ channel: sample_sheet is tab separated with column names "Sample","R1","R2"
+input_ch = Channel.fromPath(file(params.sample_sheet))
 						.splitCsv(header: true, sep: '\t')
-						.map { sample -> [sample["Sample"], file(sample["BAM"])]}
+
+ref = Channel.value("$params.index").tokenize("/").get(3)
 index = file("${params.index}")
+
+//Define whether its a fastq channel or a bam channel based on the skip_picard parameter
+params.skip_picard = true
+(bams_ch, fqs_ch) = ( params.skip_picard
+                 ? [ Channel.empty(), input_ch.map{sheet -> [sheet["Sample"], file(sheet["R1"]), file(sheet["R2"])]} ]
+								 : [ input_ch.map{sheet -> [sheet["Sample"], file(sheet["BAM"])]}, Channel.empty() ])
 
 
 // define the default output directory if not specified in the run script.
@@ -23,8 +31,8 @@ process picard_samtofq {
 	cpus 4
 	memory "32 GB"
 
-	// if process fails, retry running it
-	errorStrategy "terminate"
+	// if process fails, how to respond - retry or terminate (kill all the jobs)
+	errorStrategy "retry"
 
 	// declare the input types and its variable names
 	input:
@@ -32,7 +40,7 @@ process picard_samtofq {
 
 	//define output files to save to the output_folder by publishDir command
 	output:
-	tuple val(Sample), file("*r1.fq.gz"), file("*r2.fq.gz") into fqs_ch
+	tuple val(Sample), file("*r1.fq.gz"), file("*r2.fq.gz") into fqs_opt_ch
 
 	"""
 	set -eou pipefail
@@ -47,6 +55,7 @@ process picard_samtofq {
 
 	export Sample="$Sample"
 	ls -alh
+	echo $Sample
 
 	"""
 }
@@ -68,20 +77,23 @@ process kallisto_quant {
 	// declare the input types and its variable names
 	input:
 	file index
-	tuple val(Sample), file(R1), file(R2) from fqs_ch
+	val ref
+	tuple val(Sample), file(R1), file(R2) from fqs_ch.mix(fqs_opt_ch)
 
 	//define output files to save to the output_folder by publishDir command
 	output:
-	path "${Sample}"
+	path "${Sample}*"
 
 	"""
 	set -eou pipefail
+	echo $ref $Sample
 	ls $index
 
-	kallisto quant -i $index -o $Sample -b 30 -t 4 \
-	   --fusion --bias --rf-stranded  $R1 $R2
+	kallisto quant -i $index -o ${Sample}_$ref \
+		-b 30 -t 4 --fusion --bias --rf-stranded  $R1 $R2
 
-	ls -alh
+	#remove the fastq files to avoid being uploaded to /work dir
+	rm *.gz 
 
 	"""
 }

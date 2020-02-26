@@ -1,0 +1,8 @@
+Sample	BAM
+TARGET-20-PATJWN-04A-01R_RBS_withJunctionsOnGenome_dupsFlagged	s3://fh-pi-meshinchi-s/SR/Relapsed_BAMs/TARGET-20-PATJWN-04A-01R_RBS_withJunctionsOnGenome_dupsFlagged.bam
+TARGET-20-PATJWN-09A-01R_RBS_withJunctionsOnGenome_dupsFlagged	s3://fh-pi-meshinchi-s/SR/Relapsed_BAMs/TARGET-20-PATJWN-09A-01R_RBS_withJunctionsOnGenome_dupsFlagged.bam
+TARGET-20-PAVTRU-04A-01R_RBS_withJunctionsOnGenome_dupsFlagged	s3://fh-pi-meshinchi-s/SR/Relapsed_BAMs/TARGET-20-PAVTRU-04A-01R_RBS_withJunctionsOnGenome_dupsFlagged.bam
+TARGET-20-PAWDTX-04A-01R_RBS_withJunctionsOnGenome_dupsFlagged	s3://fh-pi-meshinchi-s/SR/Relapsed_BAMs/TARGET-20-PAWDTX-04A-01R_RBS_withJunctionsOnGenome_dupsFlagged.bam
+TARGET-20-PAWEBG-40A-01R_RBS_withJunctionsOnGenome_dupsFlagged	s3://fh-pi-meshinchi-s/SR/Relapsed_BAMs/TARGET-20-PAWEBG-40A-01R_RBS_withJunctionsOnGenome_dupsFlagged.bam
+TARGET-20-PAXLEE-04A-01R_RBS_withJunctionsOnGenome_dupsFlagged	s3://fh-pi-meshinchi-s/SR/Relapsed_BAMs/TARGET-20-PAXLEE-04A-01R_RBS_withJunctionsOnGenome_dupsFlagged.bam
+TARGET-20-PAXMLW-04A-01R_RBS_withJunctionsOnGenome_dupsFlagged	s3://fh-pi-meshinchi-s/SR/Relapsed_BAMs/TARGET-20-PAXMLW-04A-01R_RBS_withJunctionsOnGenome_dupsFlagged.bam

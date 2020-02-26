@@ -6,6 +6,6 @@ log/
 step*.out
 audit/
 sample_list.txt
-*.nextflow*
+.nextflow*
 SWOG/
 nextflow_report.html*
