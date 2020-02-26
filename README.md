@@ -22,7 +22,7 @@ Nextflow does require a `nextflow.congif` file, included here for my set-up. You
 
 * Download the `fastq` files (produced in Task 1) from S3
 * Run [kallisto](https://pachterlab.github.io/kallisto/) on them.
-* Upload the output (a `fusion.txt` file) to S3.
+* Upload the output (`abundance.txt`,`abundance.h5`, and `fusion.txt` file) to S3.
 
 # Usage
 
