@@ -6,8 +6,10 @@
 input_ch = Channel.fromPath(file(params.sample_sheet))
 						.splitCsv(header: true, sep: '\t')
 
-ref = Channel.value("$params.index").tokenize("/").get(3)
+ref = Channel.value("$params.index").tokenize("/").get(5)
 index = file("${params.index}")
+stranded_type = Channel.value("$params.stranded")
+
 
 //Define whether its a fastq channel or a bam channel based on the skip_picard parameter
 params.skip_picard = true
@@ -78,6 +80,7 @@ process kallisto_quant {
 	input:
 	file index
 	val ref
+	val stranded_type
 	tuple val(Sample), file(R1), file(R2) from fqs_ch.mix(fqs_opt_ch)
 
 	//define output files to save to the output_folder by publishDir command
@@ -89,11 +92,25 @@ process kallisto_quant {
 	echo $ref $Sample
 	ls $index
 
-	kallisto quant -i $index -o ${Sample}_$ref \
-		-b 30 -t 4 --fusion --bias --rf-stranded  $R1 $R2
+	#Check for strandedness and choose flag for Kallisto psuedoalignment
+	if [[ $stranded_type == "None" ]]
+	then
+		kallisto quant -i $index -o ${Sample}_$ref \
+				-b 30 -t 4 --fusion --bias $R1 $R2
+
+	elif [[ $stranded_type == "rf-stranded" ]]
+	then
+		kallisto quant -i $index -o ${Sample}_$ref \
+				-b 30 -t 4 --fusion --bias --rf-stranded  $R1 $R2
+
+	elif [[ $stranded_type == "fr-stranded" ]]
+	then
+		kallisto quant -i $index -o ${Sample}_$ref \
+				-b 30 -t 4 --fusion --bias --fr-stranded  $R1 $R2
+	fi
 
 	#remove the fastq files to avoid being uploaded to /work dir
-	rm *.gz 
+	rm *.gz
 
 	"""
 }
