@@ -9,3 +9,5 @@ sample_list.txt
 .nextflow*
 SWOG/
 nextflow_report.html*
+__pycache__/*
+.ipynb_checkpoints/
