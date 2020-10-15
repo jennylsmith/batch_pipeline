@@ -1,13 +1,39 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.ipynb_checkpoints/
+
+# C extensions
+*.so
+
+# Distribution / packaging
+bin/
+build/
+develop-eggs/
+dist/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+#Nextlow
+log/
+audit/
+.nextflow*
+
+#My data/tests
 *.fq.gz
 *.idx
-log/
+SWOG/
 *.bam
 *.stderr
 step*.out
-audit/
-sample_list.txt
-.nextflow*
-SWOG/
-nextflow_report.html*
-__pycache__/*
-.ipynb_checkpoints/
