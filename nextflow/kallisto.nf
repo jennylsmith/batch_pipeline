@@ -98,15 +98,10 @@ process kallisto_quant {
 		kallisto quant -i $index -o ${Sample}_$ref \
 				-b 30 -t 4 --fusion --bias $R1 $R2
 
-	elif [[ $stranded_type == "rf-stranded" ]]
-	then
+	else
 		kallisto quant -i $index -o ${Sample}_$ref \
-				-b 30 -t 4 --fusion --bias --rf-stranded  $R1 $R2
+				-b 30 -t 4 --fusion --bias --"$stranded_type" $R1 $R2
 
-	elif [[ $stranded_type == "fr-stranded" ]]
-	then
-		kallisto quant -i $index -o ${Sample}_$ref \
-				-b 30 -t 4 --fusion --bias --fr-stranded  $R1 $R2
 	fi
 
 	#remove the fastq files to avoid being uploaded to /work dir
