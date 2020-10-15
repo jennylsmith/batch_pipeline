@@ -15,7 +15,7 @@ ml nextflow/20.04.0-edge
 nextflow run -c ~/nextflow.config kallisto.nf \
     --sample_sheet sample_sheets/BEAT_AML_sample_sheet.txt  \
     --index $BASE_BUCKET/Reference_Data/Kallisto_Index/GRCh38.v29/gencode.v29_RepBase.v24.01.idx \
-    --picard_out_dir $NEW_BUCKET/BEAT_AML/RNAseq_Illumina_Data/Fastq/ \
+    --picard_out_dir $BASE_BUCKET/BEAT_AML/RNAseq_Illumina_Data/Fastq/ \
     --kallisto_out_dir $BASE_BUCKET/BEAT_AML/RNAseq_Illumina_Data/Kallisto/  \
     --stranded "None" \
     --skip_picard FALSE \
