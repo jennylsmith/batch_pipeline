@@ -30,7 +30,7 @@ def create_sample_sheet(bucket_name,prefix_name,filetype="fastq",samples="",file
     def sample_name(s3_object_summary,file_type):
         path = s3_object_summary.key.split("/")
         if file_type is "fastq":
-            pattern = re.compile("[._][Rr][12].+$")
+            pattern = re.compile(r"[._][Rr][12].[Ff].+$")
             
             #sample = re.sub(r"[._][Rr][12].+$","", sample)
         elif file_type is "bam":
