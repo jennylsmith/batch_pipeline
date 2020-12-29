@@ -37,3 +37,6 @@ SWOG/
 *.bam
 *.stderr
 step*.out
+
+#OS specific
+.DS_Store
