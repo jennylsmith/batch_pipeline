@@ -1,6 +1,6 @@
 Sample	BAM
-TARGET_AML/RNAseq_Illumina_Data/BAM/TARGET-20-ML1-50A-01R_withJunctionsOnGenome_dupsFlagged	s3://fh-pi-meshinchi-s-eco-public/TARGET_AML/RNAseq_Illumina_Data/BAM/TARGET-20-ML1-50A-01R_withJunctionsOnGenome_dupsFlagged.bam
-TARGET_AML/RNAseq_Illumina_Data/BAM/TARGET-20-OCIAML2-50A-02R_withJunctionsOnGenome_dupsFlagged	s3://fh-pi-meshinchi-s-eco-public/TARGET_AML/RNAseq_Illumina_Data/BAM/TARGET-20-OCIAML2-50A-02R_withJunctionsOnGenome_dupsFlagged.bam
-TARGET_AML/RNAseq_Illumina_Data/BAM/TARGET-20-REH-50A-01R_withJunctionsOnGenome_dupsFlagged	s3://fh-pi-meshinchi-s-eco-public/TARGET_AML/RNAseq_Illumina_Data/BAM/TARGET-20-REH-50A-01R_withJunctionsOnGenome_dupsFlagged.bam
-TARGET_AML/RNAseq_Illumina_Data/BAM/TARGET-20-TF1-50A-01R_withJunctionsOnGenome_dupsFlagged	s3://fh-pi-meshinchi-s-eco-public/TARGET_AML/RNAseq_Illumina_Data/BAM/TARGET-20-TF1-50A-01R_withJunctionsOnGenome_dupsFlagged.bam
-TARGET_AML/RNAseq_Illumina_Data/BAM/TARGET-20-WSUAML-50A-01R_withJunctionsOnGenome_dupsFlagged	s3://fh-pi-meshinchi-s-eco-public/TARGET_AML/RNAseq_Illumina_Data/BAM/TARGET-20-WSUAML-50A-01R_withJunctionsOnGenome_dupsFlagged.bam
+TARGET-20-ML1-50A-01R_withJunctionsOnGenome_dupsFlagged	s3://fh-pi-meshinchi-s-eco-public/TARGET_AML/RNAseq_Illumina_Data/BAM/TARGET-20-ML1-50A-01R_withJunctionsOnGenome_dupsFlagged.bam
+TARGET-20-OCIAML2-50A-02R_withJunctionsOnGenome_dupsFlagged	s3://fh-pi-meshinchi-s-eco-public/TARGET_AML/RNAseq_Illumina_Data/BAM/TARGET-20-OCIAML2-50A-02R_withJunctionsOnGenome_dupsFlagged.bam
+TARGET-20-REH-50A-01R_withJunctionsOnGenome_dupsFlagged	s3://fh-pi-meshinchi-s-eco-public/TARGET_AML/RNAseq_Illumina_Data/BAM/TARGET-20-REH-50A-01R_withJunctionsOnGenome_dupsFlagged.bam
+TARGET-20-TF1-50A-01R_withJunctionsOnGenome_dupsFlagged	s3://fh-pi-meshinchi-s-eco-public/TARGET_AML/RNAseq_Illumina_Data/BAM/TARGET-20-TF1-50A-01R_withJunctionsOnGenome_dupsFlagged.bam
+TARGET-20-WSUAML-50A-01R_withJunctionsOnGenome_dupsFlagged	s3://fh-pi-meshinchi-s-eco-public/TARGET_AML/RNAseq_Illumina_Data/BAM/TARGET-20-WSUAML-50A-01R_withJunctionsOnGenome_dupsFlagged.bam
