@@ -9,7 +9,7 @@ input_ch = Channel.fromPath(file(params.sample_sheet))
 ref = Channel.value("$params.index").tokenize("/").get(5)
 index = file("${params.index}")
 stranded_type = Channel.value("$params.stranded")
-
+md5 = Channel.value("$params.create_md5")
 
 //Define whether its a fastq channel or a bam channel based on the skip_picard parameter
 params.skip_picard = true
@@ -38,11 +38,13 @@ process picard_samtofq {
 
 	// declare the input types and its variable names
 	input:
+	val md5
 	tuple val(Sample), file(BAM) from bams_ch
 
 	//define output files to save to the output_folder by publishDir command
 	output:
 	tuple val(Sample), file("*r1.fq.gz"), file("*r2.fq.gz") into fqs_opt_ch
+	file "*.md5" optional true
 
 	"""
 	set -eou pipefail
@@ -56,6 +58,13 @@ process picard_samtofq {
 	 	I="$BAM" F="${BAM.simpleName}_r1.fq.gz" F2="${BAM.simpleName}_r2.fq.gz"
 
 	export Sample="$Sample"
+
+	if $md5
+	then
+		md5sum "${BAM.simpleName}_r1.fq.gz" > ${BAM.simpleName}_r1.fq.gz.md5
+		md5sum "${BAM.simpleName}_r2.fq.gz" > ${BAM.simpleName}_r2.fq.gz.md5
+	fi
+
 	ls -alh
 	echo $Sample
 

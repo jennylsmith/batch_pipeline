@@ -11,10 +11,11 @@ ml nextflow/20.06.0-edge
 nextflow run -c ~/nextflow.config kallisto.nf \
     --sample_sheet sample_sheets/CellLines_Sample_Sheet.txt  \
     --index $BASE_BUCKET/Reference_Data/Kallisto_Index/GRCh38.v29/gencode.v29_RepBase.v24.01.idx \
+    --create_md5 TRUE \
     --picard_out_dir $BASE_BUCKET/TARGET_AML/RNAseq_Illumina_Data/Fastq \
     --kallisto_out_dir $BASE_BUCKET/TARGET_AML/RNAseq_Illumina_Data/Kallisto  \
     --stranded "rf-stranded" \
     --skip_picard FALSE \
-    -with-report CellLines_report.html \
+    -with-report remission_APL_JMML_MDA_report.html \
     -cache TRUE \
     -resume
