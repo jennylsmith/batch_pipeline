@@ -1,0 +1,14 @@
+Sample	BAM
+TARGET-20-PAUUPR-14A-01R_RBS_withJunctionsOnGenome_dupsFlagged	s3://fh-pi-meshinchi-s-eco-public/TARGET_AML/RNAseq_Illumina_Data/BAM/TARGET-20-PAUUPR-14A-01R_RBS_withJunctionsOnGenome_dupsFlagged.srt.bam
+TARGET-20-PAUUYP-09A-01R_RBS_withJunctionsOnGenome_dupsFlagged	s3://fh-pi-meshinchi-s-eco-public/TARGET_AML/RNAseq_Illumina_Data/BAM/TARGET-20-PAUUYP-09A-01R_RBS_withJunctionsOnGenome_dupsFlagged.srt.bam
+TARGET-20-PAUZPA-14A-01R_RBS_withJunctionsOnGenome_dupsFlagged	s3://fh-pi-meshinchi-s-eco-public/TARGET_AML/RNAseq_Illumina_Data/BAM/TARGET-20-PAUZPA-14A-01R_RBS_withJunctionsOnGenome_dupsFlagged.srt.bam
+TARGET-20-PAUZTM-10A-01R_RBS_withJunctionsOnGenome_dupsFlagged	s3://fh-pi-meshinchi-s-eco-public/TARGET_AML/RNAseq_Illumina_Data/BAM/TARGET-20-PAUZTM-10A-01R_RBS_withJunctionsOnGenome_dupsFlagged.srt.bam
+TARGET-20-PAVDBD-09A-01R_RBS_withJunctionsOnGenome_dupsFlagged	s3://fh-pi-meshinchi-s-eco-public/TARGET_AML/RNAseq_Illumina_Data/BAM/TARGET-20-PAVDBD-09A-01R_RBS_withJunctionsOnGenome_dupsFlagged.srt.bam
+TARGET-20-PAVDGR-EOI2-14A-01R_RBS_withJunctionsOnGenome_dupsFlagged	s3://fh-pi-meshinchi-s-eco-public/TARGET_AML/RNAseq_Illumina_Data/BAM/TARGET-20-PAVDGR-EOI2-14A-01R_RBS_withJunctionsOnGenome_dupsFlagged.srt.bam
+TARGET-20-PAVDMY-EOI2-14A-01R_RBS_withJunctionsOnGenome_dupsFlagged	s3://fh-pi-meshinchi-s-eco-public/TARGET_AML/RNAseq_Illumina_Data/BAM/TARGET-20-PAVDMY-EOI2-14A-01R_RBS_withJunctionsOnGenome_dupsFlagged.srt.bam
+TARGET-20-PAVGAM-14A-01R_RBS_withJunctionsOnGenome_dupsFlagged	s3://fh-pi-meshinchi-s-eco-public/TARGET_AML/RNAseq_Illumina_Data/BAM/TARGET-20-PAVGAM-14A-01R_RBS_withJunctionsOnGenome_dupsFlagged.srt.bam
+TARGET-20-PAWPKR-14A-01R_RBS_withJunctionsOnGenome_dupsFlagged	s3://fh-pi-meshinchi-s-eco-public/TARGET_AML/RNAseq_Illumina_Data/BAM/TARGET-20-PAWPKR-14A-01R_RBS_withJunctionsOnGenome_dupsFlagged.srt.bam
+TARGET-20-PAXLYF-10A-01R_RBS_withJunctionsOnGenome_dupsFlagged	s3://fh-pi-meshinchi-s-eco-public/TARGET_AML/RNAseq_Illumina_Data/BAM/TARGET-20-PAXLYF-10A-01R_RBS_withJunctionsOnGenome_dupsFlagged.srt.bam
+TARGET-20-PAXMNG-14A-01R_RBS_withJunctionsOnGenome_dupsFlagged	s3://fh-pi-meshinchi-s-eco-public/TARGET_AML/RNAseq_Illumina_Data/BAM/TARGET-20-PAXMNG-14A-01R_RBS_withJunctionsOnGenome_dupsFlagged.srt.bam
+TARGET-20-UPN2515-09A-01R_RBS_withJunctionsOnGenome_dupsFlagged	s3://fh-pi-meshinchi-s-eco-public/TARGET_AML/RNAseq_Illumina_Data/BAM/TARGET-20-UPN2515-09A-01R_RBS_withJunctionsOnGenome_dupsFlagged.srt.bam
+TARGET-20-UPN3097-09A-01R_RBS_withJunctionsOnGenome_dupsFlagged	s3://fh-pi-meshinchi-s-eco-public/TARGET_AML/RNAseq_Illumina_Data/BAM/TARGET-20-UPN3097-09A-01R_RBS_withJunctionsOnGenome_dupsFlagged.srt.bam

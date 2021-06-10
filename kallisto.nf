@@ -30,8 +30,8 @@ process picard_samtofq {
 
 	// use picard repo on docker hub.
 	container "jennylsmith/picardtools:v2.13.2"
-	cpus 4
-	memory "32 GB"
+	cpus 8
+	memory "64 GB"
 
 	// if process fails, how to respond - retry or terminate (kill all the jobs)
 	errorStrategy "retry"
@@ -49,7 +49,7 @@ process picard_samtofq {
 	"""
 	set -eou pipefail
 
-	java -Xmx12g -Xms2g \
+	java -Xmx30g -Xms8g \
 		-jar /picard/picard.jar SamToFastq \
 	 	QUIET=true \
 	 	INCLUDE_NON_PF_READS=true \
