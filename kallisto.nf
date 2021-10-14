@@ -6,6 +6,7 @@
 input_ch = Channel.fromPath(file(params.sample_sheet))
 						.splitCsv(header: true, sep: '\t')
 
+// make the reference a param in the sample sheet to make this more portable. rather than depend on directory structure.
 ref = Channel.value("$params.index").tokenize("/").get(5)
 index = file("${params.index}")
 stranded_type = Channel.value("$params.stranded")
