@@ -1,10 +1,8 @@
-# AWS Batch Example Array Job Pipeline
+# AWS Batch Pipeline using Nextflow
 
 ## Overview
 
-
-Many scientific tasks are sequential, multi-step processes.
-The steps are dependent upon each other; that is, step 2 cannot
+Many scientific tasks are sequential, multi-step processes. The steps are dependent upon each other; that is, step 2 cannot
 proceed without the output from step 1. However, there is also the need to have processes resumed and to skip a process when it's not necessary. 
 
 This example implements one such process, consisting of three tasks. The workflow is managed with Nextflow and all data processing is carried on AWS Batch. The input files, whether BAM or Fastq, must be hosted in an S3 bucket prior to running the workflow. 
@@ -26,7 +24,7 @@ Nextflow does require a `nextflow.congif` file, included here for my set-up. You
 
 # Usage
 
-0. Upload files to process to S3 bucket 
+0. Upload files from local to S3 bucket 
 
 ```
 aws s3 cp *.bam s3://bucket/s3prefix/
