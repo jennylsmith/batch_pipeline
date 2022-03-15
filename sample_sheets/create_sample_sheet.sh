@@ -34,6 +34,7 @@ if echo "$files" | grep -Eq ".bam"
 then
   echo "$files" | awk 'BEGIN{OFS="\t";print "Sample","BAM"}{OFS="\t"; split($1,array,"/");ID=array[3]; gsub(/.bam/,"", ID); print ID,$1}' | sed -E  "s|\t($PREFIX)|\t$BUCKET/\\1|g" > $outfile
 elif echo "$files" | grep -Eq ".fq|fastq"
+then
   echo "$files" | awk -v r2="$read2" 'BEGIN{OFS="\t";print "Sample","R1","R2"}{OFS="\t"; split($1,array,"/");ID=array[3]; gsub(/_[Rr][12].+$/,"", ID); col2=$1; gsub("[Rr]1", r2, col2); print ID,$1,col2 }' | sed -E  "s|\t($PREFIX)|\t$BUCKET/\\1|g" > $outfile
 else
   printf "Input files are not bams or fastqs. Please check your bucket and which files you included."
