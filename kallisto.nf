@@ -19,9 +19,9 @@ params.skip_picard = true
 		 : [ input_ch.map{sheet -> [sheet["Sample"], file(sheet["BAM"])]}, Channel.empty() ])
 
 
-// define the default output directory if not specified in the run script.
-params.picard_out_dir = "./picard/"
-params.kallisto_out_dir = "./kallisto/"
+// // define the default output directory if not specified in the run script.
+// params.picard_out_dir = "./picard/"
+// params.kallisto_out_dir = "./kallisto/"
 
 
 //Run Picard BAM to fastq if necessary
@@ -79,7 +79,7 @@ process kallisto_quant {
 	publishDir "$params.kallisto_out_dir/"
 
 	// use Kallisto repo on docker hub.
-	container "jennylsmith/kallistov45.0:nextflow"
+	container "jennylsmith/kallisto:v0.51.1"
 	cpus 4
 	memory "30 GB"
 
