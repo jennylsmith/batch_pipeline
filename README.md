@@ -7,7 +7,7 @@ proceed without the output from step 1. However, there is also the need to have 
 
 This example implements one such process, consisting of three tasks. The workflow is managed with Nextflow and all data processing is carried on AWS Batch. The input files, whether BAM or Fastq, must be hosted in an S3 bucket prior to running the workflow. 
 
-Nextflow does require a `nextflow.congif` file, included here for my set-up. You must declare the process.executor as well as any volumes to use for temporary storage during the execution. 
+Nextflow does require a `nextflow.congif` file, included a template here for my set-up. You must declare the process.executor as well as any volumes to use for temporary storage during the execution. See the references below for more information about the Fred Hutch Nextflow support. 
 
 ### Task 1:
 
@@ -53,4 +53,9 @@ tmux
 ```
 
 Best practices include running the worklfow while using `screen` or `tmux` to avoid the temrinal getting disconnected, which will cancel all remaining jobs.  
+
+## References 
+* [Configuration at Fred Hutch](https://sciwiki.fredhutch.org/hdc/workflows/running/on_aws/)
+* [Example Template](https://github.com/FredHutch/workflow-template-nextflow)
+* [Supported Workflows at Fred Hutch](https://sciwiki.fredhutch.org/hdc/workflows/workflow_catalog/)
 
