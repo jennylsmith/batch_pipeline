@@ -7,7 +7,8 @@ DATE="$(date "+%Y-%m-%d)"
 
 #Execute the Kallisto nextflow workflow
 #stranded can be one of None, rf-stranded (our BCCA data is rf-stranded), fr-stranded
-nextflow run -c ~/nextflow.config kallisto.nf \
+nextflow run -c ./nextflow.config \
+    kallisto.nf \
     -with-report  ${DATE}_report.html \
     -cache TRUE \
     -resume
