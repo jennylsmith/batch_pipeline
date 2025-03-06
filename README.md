@@ -23,14 +23,25 @@ Nextflow does require a `nextflow.congif` file, included a template here for my 
 
 # Usage
 
-0. Create Kallisto index. Then Upload index and BAMs files from local to S3 bucket.
+0. Create Kallisto index. 
 
 ```
 BASE_BUCKET = "s3://fh-pi-meshinchi-s-eco-public"
 
 # Create Kallisto index
 kallisto index -i gencode.v29_RepBase.v24.01.transcripts.idx gencode.v29_RepBase.v24.01.transcripts.fa.gz
+```
 
+if kallisto is not installed locally, you can use singularity or apptainer with the kallisto image to create the index. 
+
+```
+# Create Kallisto index in a singularity container
+singularity exec -B $PWD/Reference_Data:/Reference_Data docker://quay.io/jennylsmith/kallisto:v0.51.1 \
+    kallisto index -i gencode.v29_RepBase.v24.01.transcripts.idx /Reference_Data/gencode.v29_RepBase.v24.01.transcripts.fa.gz
+```
+
+1. Then Upload index and BAMs files from local to S3 bucket.
+```
 # Upload index to S3
 aws s3 cp *.idx $BASE_BUCKET/Reference_Data/Kallisto_Index/GRCh38.v29/
 
@@ -38,7 +49,7 @@ aws s3 cp *.idx $BASE_BUCKET/Reference_Data/Kallisto_Index/GRCh38.v29/
 aws s3 cp BAM/*.bam $BASE_BUCKET/TARGET_AML/RNAseq_Illumina_Data/BAM/
 ```
 
-1. Create a sample sheet with the appropriate headers. This is managed by the script `create_sample_sheet.sh` which looks for whether the files in S3 have a fastq or bam file extension. This could be improved by using object tagging rather than base shell commands to parse the desired files.  The `create_sample_sheet.sh` script names the output by the  S3 prefix.
+2. Create a sample sheet with the appropriate headers. This is managed by the script `create_sample_sheet.sh` which looks for whether the files in S3 have a fastq or bam file extension. This could be improved by using object tagging rather than base shell commands to parse the desired files.  The `create_sample_sheet.sh` script names the output by the  S3 prefix.
 
 ```
 # Example for BAMs
@@ -50,7 +61,7 @@ INCLUDE="_R1.fq.gz"
 ./create_sample_sheet.sh s3://bucket s3prefix $INCLUDE
 ```
 
-2. Update the nextlfow run.sh script to include the appropriate sample sheet and be sure to change the --skip_picard parameter to be true/false dependign on where in the workflow you need to start. Also update the `BASE_BUCKET` and appropriate file paths, and the  `--skip_picard` parameter. 
+3. Update the nextlfow run.sh script to include the appropriate sample sheet and be sure to change the --skip_picard parameter to be true/false dependign on where in the workflow you need to start. Also update the `BASE_BUCKET` and appropriate file paths, and the  `--skip_picard` parameter. 
 
 Note that if you have job failures with BAM file inputs, just restard the job since the `-resume` option is turned on and object caching is turned on. That way Nextflow handles which processes can be skipped since the outputs are cached and saved.  Always run the workflow inside the same directory each time to avoid nextflow from not being able to access the cache. 
 
