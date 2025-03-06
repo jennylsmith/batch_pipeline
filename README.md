@@ -23,20 +23,29 @@ Nextflow does require a `nextflow.congif` file, included a template here for my 
 
 # Usage
 
-0. Upload files from local to S3 bucket 
+0. Create Kallisto index. Then Upload index and BAMs files from local to S3 bucket.
 
 ```
-aws s3 cp *.bam s3://bucket/s3prefix/
+BASE_BUCKET = "s3://fh-pi-meshinchi-s-eco-public"
+
+# Create Kallisto index
+kallisto index -i gencode.v29_RepBase.v24.01.transcripts.idx gencode.v29_RepBase.v24.01.transcripts.fa.gz
+
+# Upload index to S3
+aws s3 cp *.idx $BASE_BUCKET/Reference_Data/Kallisto_Index/GRCh38.v29/
+
+# Upload BAMs to S3
+aws s3 cp BAM/*.bam $BASE_BUCKET/TARGET_AML/RNAseq_Illumina_Data/BAM/
 ```
 
 1. Create a sample sheet with the appropriate headers. This is managed by the script `create_sample_sheet.sh` which looks for whether the files in S3 have a fastq or bam file extension. This could be improved by using object tagging rather than base shell commands to parse the desired files.  The `create_sample_sheet.sh` script names the output by the  S3 prefix.
 
 ```
-#Example for BAMs
+# Example for BAMs
 INCLUDE=".bam"
 ./create_sample_sheet.sh s3://bucket s3prefix $INCLUDE
 
-#Exmaple for fastqs. Only select the read1 fastq if paired end reads. 
+# Exmaple for fastqs. Only select the read1 fastq if paired end reads. 
 INCLUDE="_R1.fq.gz"
 ./create_sample_sheet.sh s3://bucket s3prefix $INCLUDE
 ```
@@ -46,7 +55,7 @@ INCLUDE="_R1.fq.gz"
 Note that if you have job failures with BAM file inputs, just restard the job since the `-resume` option is turned on and object caching is turned on. That way Nextflow handles which processes can be skipped since the outputs are cached and saved.  Always run the workflow inside the same directory each time to avoid nextflow from not being able to access the cache. 
 
 ```
-#Run the workflow
+# Run the workflow
 tmux
 ./kallist_run.sh 
 ```
