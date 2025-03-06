@@ -106,11 +106,11 @@ process kallisto_quant {
   if [[ $stranded_type == "None" ]]
   then
     kallisto quant -i $index -o ${Sample}_$ref \
-        -b 30 -t 4 --fusion --bias $R1 $R2
+        -b 30 -t $task.cpus $R1 $R2
 
   else
     kallisto quant -i $index -o ${Sample}_$ref \
-        -b 30 -t 4 --$stranded_type \
+        -b 30 -t $task.cpus --$stranded_type \
         $R1 $R2
 
   fi
