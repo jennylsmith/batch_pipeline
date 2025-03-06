@@ -9,6 +9,6 @@ DATE="$(date "+%Y-%m-%d)"
 #stranded can be one of None, rf-stranded (our BCCA data is rf-stranded), fr-stranded
 nextflow run -c ./nextflow.config \
     kallisto.nf \
-    -with-report  ${DATE}_report.html \
+    -with-report  nextflow_report_${DATE}.html \
     -cache TRUE \
     -resume
